@@ -90,10 +90,10 @@ public class World {
         System.out.println(position1.add(position2));
 
         MapDirection test = MapDirection.NORTH;
-        System.out.println(MapDirection.next(test));
-        System.out.println(MapDirection.previous(test));
-        System.out.println(MapDirection.toString(test));
-        System.out.println(MapDirection.toUnitVector(test));
+        System.out.println(test.next());
+        System.out.println(test.previous());
+        System.out.println(test.toString());
+        System.out.println(test.toUnitVector());
     }
 
 }
