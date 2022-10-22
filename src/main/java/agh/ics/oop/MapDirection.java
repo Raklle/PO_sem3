@@ -6,6 +6,7 @@ public enum MapDirection {
     WEST,
     EAST;
 
+    @Override
     public String toString() {
         return switch (this) {
             case EAST -> "Wschod";
@@ -30,12 +31,12 @@ public enum MapDirection {
             case NORTH -> WEST;
         };
     }
-    public World.Vector2d toUnitVector(){
+    public Vector2d toUnitVector(){
         return switch (this) {
-            case EAST -> new World.Vector2d(1, 0);
-            case WEST -> new World.Vector2d(-1, 0);
-            case SOUTH -> new World.Vector2d(0, -1);
-            case NORTH -> new World.Vector2d(0, 1);
+            case EAST -> new Vector2d(1, 0);
+            case WEST -> new Vector2d(-1, 0);
+            case SOUTH -> new Vector2d(0, -1);
+            case NORTH -> new Vector2d(0, 1);
         };
     }
 
