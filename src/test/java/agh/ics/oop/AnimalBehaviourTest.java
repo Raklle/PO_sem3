@@ -2,22 +2,26 @@ package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
 
-import static agh.ics.oop.OptionParser.*;
+import static agh.ics.oop.OptionsParser.parse;
+import static agh.ics.oop.SingleAnimalSimulation.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalBehaviourTest {
+    private final RectangularMap catMap = new RectangularMap(4, 4);
+    private final RectangularMap dogMap = new RectangularMap(4, 4);
+    private final Vector2d start = new Vector2d(2, 2);
 
     @Test
     void animalCanWalkAndTurn() {
         //given
-        Animal cat = new Animal();
+        Animal cat = new Animal(catMap, start);
         String[] ordersCat = {"f", "right", "forward", "f", "l", "left"};
-        Animal dog = new Animal();
+        Animal dog = new Animal(dogMap, start);
         String[] ordersDog = {"r", "r", "r", "b", "backwards", "right"};
 
         //when
-        run(parse(ordersCat), cat);
-        run(parse(ordersDog), dog);
+        runOneAnimal(parse(ordersCat), cat);
+        runOneAnimal(parse(ordersDog), dog);
 
         //then
         assertTrue(cat.isAt(new Vector2d(4, 3)));
@@ -29,14 +33,14 @@ class AnimalBehaviourTest {
     @Test
     void animalIgnoresUnknownCommands() {
         //given
-        Animal cat = new Animal();
+        Animal cat = new Animal(catMap, start);
         String[] ordersCat = {"f", "zxcvzx", "zxcv", "jump", "bonkward", "f"};
-        Animal dog = new Animal();
+        Animal dog = new Animal(dogMap, start);
         String[] ordersDog = {"r", "jgffgx", "gfv", "sit", "backflip", "right"};
 
         //when
-        run(parse(ordersCat), cat);
-        run(parse(ordersDog), dog);
+        runOneAnimal(parse(ordersCat), cat);
+        runOneAnimal(parse(ordersDog), dog);
 
         //then
         assertTrue(cat.isAt(new Vector2d(2, 4)));
@@ -49,22 +53,21 @@ class AnimalBehaviourTest {
     @Test
     void animalCantLeaveMap() {
         //given
-        Animal cat = new Animal();
+        Animal cat = new Animal(catMap, start);
         String[] ordersCat = {"f", "zxcvzx", "f", "f", "f", "f"};
-        Animal dog = new Animal();
-        // 9x forward -> right -> 8x forward -> right -> 12x forward
-        String[] ordersDog = {"f", "f", "f", "f", "f", "f", "f", "f", "f", "r","f", "f", "f", "f","f", "f", "f", "f", "r","f", "f", "f", "f","f", "f", "f", "f","f", "f", "f", "f"};
+        Animal dog = new Animal(dogMap, start);
+        String[] ordersDog = {"f", "f", "f", "r","f", "f", "f"};
 
 
         //when
-        run(parse(ordersCat), cat);
-        run(parse(ordersDog), dog);
+        runOneAnimal(parse(ordersCat), cat);
+        runOneAnimal(parse(ordersDog), dog);
 
         //then
         assertTrue(cat.isAt(new Vector2d(2, 4)));
         assertTrue(cat.isFacing(MapDirection.NORTH));
-        assertTrue(dog.isAt(new Vector2d(4, 0)));
-        assertTrue(dog.isFacing(MapDirection.SOUTH));
+        assertTrue(dog.isAt(new Vector2d(4, 4)));
+        assertTrue(dog.isFacing(MapDirection.EAST));
 
     }
 

@@ -35,6 +35,16 @@ public record Vector2d(int x, int y) {
     }
 
     @Override
+    public int x() {
+        return x;
+    }
+
+    @Override
+    public int y() {
+        return y;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
