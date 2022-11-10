@@ -2,7 +2,7 @@ package agh.ics.oop;
 
 import java.util.Arrays;
 
-public class OptionParser {
+public class OptionsParser {
     public static MoveDirection[] parse(String[] directions){
         MoveDirection[] directionsEnum = new MoveDirection[directions.length];
         int index = 0;
@@ -18,12 +18,5 @@ public class OptionParser {
         }
         return Arrays.copyOfRange(directionsEnum, 0, index);
     }
-    public static void run(MoveDirection[] directions, Animal animal){
-        for(MoveDirection direction : directions) {
-            animal.move(direction);
-        };
-
-    }
-
 }
 
