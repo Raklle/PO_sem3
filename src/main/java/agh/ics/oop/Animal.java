@@ -7,6 +7,10 @@ public class Animal {
     private Vector2d position;
     private final IWorldMap map;
 
+    public Animal(IWorldMap map){
+        this(map, new Vector2d(2, 2));
+    }
+
     public Animal(IWorldMap map, Vector2d initialPosition){
         this.position = initialPosition;
         this.direction = MapDirection.NORTH;
@@ -30,6 +34,7 @@ public class Animal {
     public boolean isAt(Vector2d target){
         return Objects.equals(this.position, target);
     }
+
     public boolean isFacing(MapDirection target){ return direction.equals(target); }
 
     public void move(MoveDirection order){
@@ -49,6 +54,7 @@ public class Animal {
                     position = position.subtract(step);
                 }
             }
-            }
+        }
+        map.moved(position);
     }
 }
