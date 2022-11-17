@@ -34,10 +34,10 @@ public record Vector2d(int x, int y) {
         return new Vector2d(-x, -y);
     }
 
-    @Override
-    public int x() {
-        return x;
-    }
+//    @Override
+//    public int x() {
+//        return x;
+//    }
 
     @Override
     public int y() {
