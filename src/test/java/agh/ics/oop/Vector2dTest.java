@@ -18,7 +18,7 @@ class Vector2dTest {
 
         //then
         assertEquals(s1, "(1,2)");
-        assertEquals(s1, "(-1,0)");
+        assertEquals(s2, "(-1,0)");
     }
 
     @Test
@@ -134,8 +134,8 @@ class Vector2dTest {
         Vector2d v3 = new Vector2d(3, -3);
 
         //then
-        assertTrue(v1.equals(v2));
-        assertFalse(v3.equals(v2));
+        assertEquals(v1, v2);
+        assertNotEquals(v3, v2);
 
     }
 }

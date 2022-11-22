@@ -74,21 +74,21 @@ class GrassFieldTest {
         assertTrue(map.isOccupied(grassPosition));
         assertFalse(map.isOccupied(emptyPosition));
     }
-    @Test
-    void movedTest() {
-        //given
-        GrassField map = new GrassField(1);
-
-        Vector2d grassPosition = new Vector2d(2, 3);
-        //when
-        map.addGrass(grassPosition);
-//        System.out.println(map);
-
-        //then
-        assertTrue(map.objectAt(grassPosition) instanceof Grass);
-        map.moved(grassPosition);
-        assertNull(map.objectAt(grassPosition));
-//        System.out.println(map);
-    }
+//    @Test
+//    void movedTest() {
+//        //given
+//        GrassField map = new GrassField(1);
+//
+//        Vector2d grassPosition = new Vector2d(2, 3);
+//        //when
+//        map.addGrass(grassPosition);
+////        System.out.println(map);
+//
+//        //then
+//        assertTrue(map.objectAt(grassPosition) instanceof Grass);
+//        map.moved(grassPosition);
+//        assertNull(map.objectAt(grassPosition));
+////        System.out.println(map);
+//    }
 
 }

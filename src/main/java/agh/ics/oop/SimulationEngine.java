@@ -28,7 +28,7 @@ public class SimulationEngine implements IEngine{
                 animalList.add(newborn);
             }
         }
-
+        System.out.println(map);
         for(int i = 0; i < directions.length; i++){
             animalList.get(i % animalList.size()).move(directions[i]);
             if(drawSteps) System.out.println(map);
