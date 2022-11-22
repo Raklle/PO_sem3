@@ -15,11 +15,9 @@ public class RectangularMap extends AbstractWorldMap{
         return position.follows(LOWER_BOUND) && position.precedes(upperBound) && !isOccupied(position);
     }
 
-    protected Vector2d[] getCorners(){
-        return new Vector2d[]{LOWER_BOUND, upperBound};
+    protected Bounds getCorners(){
+        return new Bounds(LOWER_BOUND, upperBound);
     }
 
-    @Override
-    public void moved(Vector2d position) {};
 
 }
