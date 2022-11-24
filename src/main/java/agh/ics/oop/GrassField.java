@@ -1,12 +1,10 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Math;
 
 public class GrassField extends AbstractWorldMap{
 
-    private final ArrayList<Grass> grassList = new ArrayList<>();
     private final int grassSpawn;
 
     public GrassField(int n) {
@@ -21,13 +19,16 @@ public class GrassField extends AbstractWorldMap{
             if(isOccupied(new Vector2d(x, y))){
                  i--;
             }else {
-                grassList.add(new Grass(new Vector2d(x, y)));
+                Grass grass = new Grass(new Vector2d(x,y));
+                mapElements.put(grass.position(), grass);
             }
         }
-    };
+    }
 
+    
     public void addGrass(Vector2d position){
-        grassList.add(new Grass(position));
+        Grass grass = new Grass(position);
+        mapElements.put(grass.position(), grass);
     }
 
     @Override
@@ -36,55 +37,36 @@ public class GrassField extends AbstractWorldMap{
     }
 
 
-    @Override
-    public boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
+    protected Bounds getCorners(){
+
+        Vector2d lower = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        Vector2d upper = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+
+        for(Vector2d key: mapElements.keySet()){
+            lower = lower.lowerLeft(key);
+            upper = upper.upperRight(key);
+        }
+        return new Bounds(lower, upper);
     }
 
-    @Override
-    public Object objectAt(Vector2d position) {
-        Object object = super.objectAt(position);
-        if(object != null){
-            return object;
-        }
-        for(Grass grass: grassList){
-            if(grass.position().equals(position)){
-                return grass;
-            }
-        }
-        return null;
-    }
-
-    protected Vector2d[] getCorners(){
-
-        Vector2d lower = new Vector2d(100000, 100000);
-        Vector2d upper = new Vector2d(-100000, -100000);
-        for(Grass grass: grassList){
-            lower = lower.lowerLeft(grass.position());
-            upper = upper.upperRight(grass.position());
-        }
-        for(Animal animal:animalList){
-            lower = lower.lowerLeft(animal.getPosition());
-            upper = upper.upperRight(animal.getPosition());
-        }
-        return new Vector2d[]{lower, upper};
-    }
     private Grass grassAt(Vector2d position) {
-        for (Grass grass : grassList) {
-            if (grass.position().equals(position)) {
-                return grass;
-            }
+        if( objectAt(position) instanceof Grass){
+            return (Grass) objectAt(position);
         }
         return null;
     }
-    @Override
-    public void moved(Vector2d position) {
-        if(grassAt(position) != null){
-            generateGrass(1);
-            grassList.remove(this.grassAt(position));
 
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        if(grassAt(newPosition) != null ){
+            generateGrass(1);
+            mapElements.remove(newPosition);
         }
+        super.positionChanged(oldPosition, newPosition);
     }
+
+
+
 
 
 }
