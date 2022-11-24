@@ -20,12 +20,13 @@ public class GrassField extends AbstractWorldMap{
                  i--;
             }else {
                 Grass grass = new Grass(new Vector2d(x,y));
+                mapBoundary.addMapElement(grass);
                 mapElements.put(grass.position(), grass);
             }
         }
     }
 
-    
+
     public void addGrass(Vector2d position){
         Grass grass = new Grass(position);
         mapElements.put(grass.position(), grass);
@@ -36,18 +37,6 @@ public class GrassField extends AbstractWorldMap{
         return !(this.objectAt(position) instanceof Animal);
     }
 
-
-    protected Bounds getCorners(){
-
-        Vector2d lower = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        Vector2d upper = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-
-        for(Vector2d key: mapElements.keySet()){
-            lower = lower.lowerLeft(key);
-            upper = upper.upperRight(key);
-        }
-        return new Bounds(lower, upper);
-    }
 
     private Grass grassAt(Vector2d position) {
         if( objectAt(position) instanceof Grass){

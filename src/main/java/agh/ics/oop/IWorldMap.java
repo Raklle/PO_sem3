@@ -47,13 +47,5 @@ public interface IWorldMap {
      * @return Object or null if the position is not occupied.
      */
     Object objectAt(Vector2d position);
-//
-//    /**
-//     * Trigger action after movement, at given new location.
-//     *
-//     * @param position
-//     *            New position of an object.
-//     */
-//
-//     void moved(Vector2d position);
+
 }

@@ -7,7 +7,7 @@ public class Animal implements  IMapElement{
     private MapDirection direction;
     private Vector2d position;
     private final IWorldMap map;
-    ArrayList<IPositionChangeObserver> observerList = new ArrayList<>();
+    private final ArrayList<IPositionChangeObserver> observerList = new ArrayList<>();
 
 
     public Animal(IWorldMap map){
@@ -20,11 +20,11 @@ public class Animal implements  IMapElement{
         this.map = map;
     }
 
-    void addObserver(IPositionChangeObserver observer){
+    public void addObserver(IPositionChangeObserver observer){
         observerList.add(observer);
     }
 
-    void removeObserver(IPositionChangeObserver observer){
+    public void removeObserver(IPositionChangeObserver observer){
         observerList.remove(observer);
     }
 
@@ -51,7 +51,7 @@ public class Animal implements  IMapElement{
     public boolean isFacing(MapDirection target){ return direction.equals(target); }
 
 
-    void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+    private void positionChanged(Vector2d oldPosition, Vector2d newPosition){
         for(IPositionChangeObserver observer : observerList){
             observer.positionChanged(oldPosition, newPosition);
         }
@@ -79,4 +79,3 @@ public class Animal implements  IMapElement{
         }
     }
 }
-//    f b r l f f r r f f f f f f f f
