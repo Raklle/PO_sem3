@@ -12,7 +12,7 @@ public class OptionsParser {
                 case "f", "forward" -> directionsEnum[index] = MoveDirection.FORWARD;
                 case "r", "right" -> directionsEnum[index] = MoveDirection.RIGHT;
                 case "b", "backwards" -> directionsEnum[index] = MoveDirection.BACKWARD;
-                default -> index--;
+                default -> throw (new IllegalArgumentException(direction + " is not legal move specification"));
             }
             index++;
         }

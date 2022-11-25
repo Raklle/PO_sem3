@@ -2,6 +2,7 @@ package agh.ics.oop;
 
 import org.junit.jupiter.api.Test;
 
+
 import static agh.ics.oop.OptionsParser.parse;
 import static agh.ics.oop.SingleAnimalSimulation.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,22 +32,17 @@ class AnimalBehaviourTest {
 
     }
     @Test
-    void animalIgnoresUnknownCommands() {
+    void unknownCommandsThrowException() {
         //given
         Animal cat = new Animal(catMap, start);
         String[] ordersCat = {"f", "zxcvzx", "zxcv", "jump", "bonkward", "f"};
         Animal dog = new Animal(dogMap, start);
         String[] ordersDog = {"r", "jgffgx", "gfv", "sit", "backflip", "right"};
 
-        //when
-        runOneAnimal(parse(ordersCat), cat);
-        runOneAnimal(parse(ordersDog), dog);
-
         //then
-        assertTrue(cat.isAt(new Vector2d(2, 4)));
-        assertTrue(cat.isFacing(MapDirection.NORTH));
-        assertTrue(dog.isAt(new Vector2d(2, 2)));
-        assertTrue(dog.isFacing(MapDirection.SOUTH));
+        assertThrows(IllegalArgumentException.class, () -> runOneAnimal(parse(ordersCat), cat));
+
+        assertThrows(IllegalArgumentException.class, () -> runOneAnimal(parse(ordersDog), dog));
 
     }
 
@@ -54,7 +50,7 @@ class AnimalBehaviourTest {
     void animalCantLeaveMap() {
         //given
         Animal cat = new Animal(catMap, start);
-        String[] ordersCat = {"f", "zxcvzx", "f", "f", "f", "f"};
+        String[] ordersCat = {"f", "f", "f", "f", "f"};
         Animal dog = new Animal(dogMap, start);
         String[] ordersDog = {"f", "f", "f", "r","f", "f", "f"};
 

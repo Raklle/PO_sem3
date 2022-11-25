@@ -4,6 +4,8 @@ import java.util.Map;
 
 abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
+
+
     protected Map<Vector2d, IMapElement> mapElements = new HashMap<>();
     protected MapBoundary mapBoundary = new MapBoundary();
 
@@ -16,7 +18,7 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
             mapBoundary.addMapElement(animal);
             return true;
         }
-        return false;
+        throw (new IllegalArgumentException("illegal animal placement on position: " + animal.position()));
     }
 
     @Override
@@ -37,6 +39,10 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
         mapElements.put(newPosition, obj);
     }
 
+    public Bounds getBounds(){
+        return mapBoundary.getBounds();
+    }
 }
+
 
 

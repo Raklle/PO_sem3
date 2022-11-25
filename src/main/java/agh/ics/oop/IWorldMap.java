@@ -2,7 +2,7 @@ package agh.ics.oop;
 
 /**
  * The interface responsible for interacting with the map of the world.
- * Assumes that Vector2d and MoveDirection classes are defined.
+ * Assumes that Vector2d ,MoveDirection and Bounds classes are defined.
  *
  * @author apohllo
  *
@@ -48,4 +48,6 @@ public interface IWorldMap {
      */
     Object objectAt(Vector2d position);
 
+
+    Bounds getBounds();
 }
