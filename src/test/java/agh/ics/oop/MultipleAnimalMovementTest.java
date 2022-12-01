@@ -34,12 +34,9 @@ class MultipleAnimalMovementTest {
         //when
         MoveDirection[] directions = new OptionsParser().parse(args);
         IEngine engine = new SimulationEngine(directions, map, positions);
-        engine.run();
 
         //then
-        assertTrue(map.isOccupied(new Vector2d(2, 3)));
-        assertFalse(map.isOccupied(new Vector2d(2, 2)));
-//        System.out.println(map);
+        assertThrows(IllegalArgumentException.class, engine::run);
     }
     @Test
     void animalsCantPassOthers() {

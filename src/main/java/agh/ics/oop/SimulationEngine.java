@@ -24,9 +24,9 @@ public class SimulationEngine implements IEngine{
         ArrayList<Animal> animalList = new ArrayList<>();
         for(Vector2d position:positions){
             Animal newborn = new Animal(map, position);
-            if(map.place(newborn)){
-                animalList.add(newborn);
-            }
+            map.place(newborn);
+            animalList.add(newborn);
+
         }
         System.out.println(map);
         for(int i = 0; i < directions.length; i++){
