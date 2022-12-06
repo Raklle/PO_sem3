@@ -13,20 +13,17 @@ import javafx.stage.Stage;
 public class App extends Application {
     private IWorldMap map;
     private final GridPane gridPane = new GridPane();
-    private static final int CELL_SIZE = 30;
+    public static final int CELL_SIZE = 60;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
 
-        drawFrame();
-        gridPane.setGridLinesVisible(true);
-        drawMap();
 
+        updateMap();
         Scene scene = new Scene(gridPane, gridPane.getPrefWidth(), gridPane.getPrefHeight());
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     @Override
@@ -35,8 +32,9 @@ public class App extends Application {
         this.map = new GrassField(20);
         MoveDirection[] directions = new OptionsParser().parse(getParameters().getRaw().toArray(new String[0]));
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
-        IEngine engine = new SimulationEngine(directions, map, positions, true);
-        engine.run();
+        SimulationEngine engine = new SimulationEngine(directions, map, positions, true);
+        Thread thread = new Thread(engine);
+        thread.start();
     }
 
 
@@ -78,9 +76,10 @@ public class App extends Application {
             return;
         }
         Vector2d gridPosition = getGridPosition(position);
-        Label label = new Label(object.toString());
-        gridPane.add(label, gridPosition.x(), gridPosition.y());
-        GridPane.setHalignment(label, HPos.CENTER);
+
+        GuiElementBox elementBox = new GuiElementBox((IMapElement) object, false);
+        gridPane.add(elementBox.displayObject(), gridPosition.x(), gridPosition.y());
+
     }
 
     private void drawMap(){
@@ -91,5 +90,12 @@ public class App extends Application {
                 drawObject(new Vector2d(x, y));
             }
         }
+    }
+
+    private void updateMap(){
+        gridPane.getChildren().clear();
+        drawFrame();
+        drawMap();
+        gridPane.setGridLinesVisible(true);
     }
 }

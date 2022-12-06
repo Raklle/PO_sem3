@@ -4,8 +4,8 @@ import java.util.TreeSet;
 
 public class MapBoundary implements IPositionChangeObserver {
 
-    public TreeSet<Vector2d> xSet = new TreeSet<>(Comparator.comparingInt(Vector2d::x));
-    public TreeSet<Vector2d> ySet = new TreeSet<>(Comparator.comparingInt(Vector2d::y));
+    private final TreeSet<Vector2d> xSet = new TreeSet<>(Comparator.comparingInt(Vector2d::x));
+    private final TreeSet<Vector2d> ySet = new TreeSet<>(Comparator.comparingInt(Vector2d::y));
 
     public void addMapElement(IMapElement newElement){
         Vector2d position = newElement.position();

@@ -10,15 +10,15 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     protected MapBoundary mapBoundary = new MapBoundary();
 
     @Override
-    public boolean place(Animal animal) {
+    public void place(Animal animal) {
         if(canMoveTo(animal.position())) {
             mapElements.put(animal.position(), animal);
             animal.addObserver(mapBoundary);
             animal.addObserver(this);
             mapBoundary.addMapElement(animal);
-            return true;
+            return;
         }
-        throw (new IllegalArgumentException("illegal animal placement on position: " + animal.position()));
+        throw new IllegalArgumentException("illegal animal placement on position: " + animal.position());
     }
 
     @Override
