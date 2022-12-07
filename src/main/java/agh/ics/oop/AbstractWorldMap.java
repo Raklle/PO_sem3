@@ -22,7 +22,7 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     }
 
     @Override
-    public Object objectAt(Vector2d position) {
+    public IMapElement objectAt(Vector2d position) {
        return mapElements.get(position);
     }
 
@@ -30,7 +30,7 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     @Override
     public String toString() {
         MapVisualizer map = new MapVisualizer(this);
-        Bounds bounds = mapBoundary.getBounds();
+        Bounds bounds = this.getBounds();
         return map.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 
@@ -41,6 +41,13 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     public Bounds getBounds(){
         return mapBoundary.getBounds();
+    }
+
+    public int getHeight(){
+        return mapBoundary.getHeight();
+    }
+    public int getWidth(){
+        return mapBoundary.getWidth();
     }
 }
 

@@ -1,8 +1,6 @@
 package agh.ics.oop.gui;
 
 import agh.ics.oop.IMapElement;
-import agh.ics.oop.Vector2d;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,42 +8,72 @@ import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.VBox;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+
 import static agh.ics.oop.gui.App.CELL_SIZE;
 
 
 public class GuiElementBox {
 
 
-    private final IMapElement element;
+
     private final boolean showLabel;
+    private final Map<String,ImageView> mapElementsView = new HashMap<>();
 
 
-    public GuiElementBox(IMapElement element) {
-        this(element,true);
+    public GuiElementBox() {
+        this(false);
     }
-    public GuiElementBox(IMapElement element, boolean showLabel) {
-        this.element = element;
+
+    public GuiElementBox(boolean showLabel) {
         this.showLabel = showLabel;
     }
 
-    public VBox displayObject(){
-        Image img = new Image(element.getImageSrc());
-        ImageView grassView = new ImageView(img);
-        grassView.setImage(img);
-        VBox vbox = new VBox(0);
+    public VBox displayObject(IMapElement element){
+
+        String elementImageSrc = element.getImageSrc();
+
+        //nie wiem czemu to nie działa
+//        if(mapElementsView.containsKey(elementImageSrc)){
+//            ImageView elementView = mapElementsView.get(elementImageSrc);
+//            return generateVbox(element, elementView);
+//        }
+
+        Image img;
+        try {
+            img = new Image(new FileInputStream(elementImageSrc));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        ImageView newElement = new ImageView(img);
+        newElement.setImage(img);
+        mapElementsView.put(elementImageSrc, newElement);
+
+        return generateVbox(element, newElement);
+
+    }
+
+    private VBox generateVbox(IMapElement element, ImageView elementView){
+
 //        bez etykiety wygląda lepiej
         if(showLabel) {
-            grassView.setFitHeight(CELL_SIZE - 20);
-            grassView.setFitWidth(CELL_SIZE - 20);
+            elementView.setFitHeight(CELL_SIZE - 20);
+            elementView.setFitWidth(CELL_SIZE - 20);
             Label label = new Label(element.position().toString());
-            vbox.getChildren().addAll(grassView, label);
+            VBox vbox = new VBox(elementView, label);
             vbox.setAlignment(Pos.CENTER);
-        }else{
-            grassView.setFitHeight(CELL_SIZE);
-            grassView.setFitWidth(CELL_SIZE);
-            vbox.getChildren().addAll(grassView);
+            return vbox;
         }
-        return vbox;
+
+        elementView.setFitHeight(CELL_SIZE);
+        elementView.setFitWidth(CELL_SIZE);
+        return new VBox(elementView);
+
+
 
     }
 }

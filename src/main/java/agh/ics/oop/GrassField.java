@@ -47,17 +47,22 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-        if(grassAt(newPosition) != null ){
-            generateGrass(1);
-            mapElements.remove(newPosition);
-        }
+        removeGrass(newPosition);
         super.positionChanged(oldPosition, newPosition);
     }
 
+    @Override
+    public void place(Animal animal) {
+        removeGrass(animal.position());
+        super.place(animal);
+    }
 
-
-
-
+    private void removeGrass(Vector2d position){
+        if(grassAt(position) != null ){
+            generateGrass(1);
+            mapElements.remove(position);
+        }
+    }
 }
 
 

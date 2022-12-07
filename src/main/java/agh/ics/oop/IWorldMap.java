@@ -46,8 +46,10 @@ public interface IWorldMap {
      *            The position of the object.
      * @return Object or null if the position is not occupied.
      */
-    Object objectAt(Vector2d position);
+    IMapElement objectAt(Vector2d position);
 
 
     Bounds getBounds();
+    int getHeight();
+    int getWidth();
 }
